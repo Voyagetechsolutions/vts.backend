@@ -2,15 +2,17 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /app
 
-# Copy solution and project files
-COPY vts.backend/*.sln ./
-COPY vts.backend/*.csproj ./  
+# Copy solution and project files (adjust names if needed)
+COPY *.sln ./
+COPY *.csproj ./  
 
 # Restore dependencies
 RUN dotnet restore "*.sln"
 
-# Copy the rest of the code and publish
-COPY vts.backend/. ./
+# Copy all source code
+COPY . ./
+
+# Publish the app
 RUN dotnet publish "*.sln" -c Release -o out
 
 # Stage 2: Run the app
